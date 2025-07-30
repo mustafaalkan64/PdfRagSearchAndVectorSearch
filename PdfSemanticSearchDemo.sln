@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35919.96 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfSemanticSearchDemo", "PdfSemanticSearchDemo\PdfSemanticSearchDemo.csproj", "{5B68B1F0-0F84-4FEA-B387-B3D465A5078C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B68B1F0-0F84-4FEA-B387-B3D465A5078C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B68B1F0-0F84-4FEA-B387-B3D465A5078C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B68B1F0-0F84-4FEA-B387-B3D465A5078C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B68B1F0-0F84-4FEA-B387-B3D465A5078C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {94293891-3FF5-44C9-BF11-F9ACC60F2029}
+	EndGlobalSection
+EndGlobal
