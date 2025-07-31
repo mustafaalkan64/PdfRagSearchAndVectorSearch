@@ -30,7 +30,10 @@ public class OllamaService : IOllamaService
             var json = JsonSerializer.Serialize(request);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{_baseUrl}/api/embeddings", content);
+            var envValue = Environment.GetEnvironmentVariable("OLLAMA_API_URL");
+            var ollamaUrl = !string.IsNullOrEmpty(envValue) ? envValue : _baseUrl;
+
+            var response = await _httpClient.PostAsync($"{ollamaUrl}/api/embeddings", content);
             
             if (!response.IsSuccessStatusCode)
             {

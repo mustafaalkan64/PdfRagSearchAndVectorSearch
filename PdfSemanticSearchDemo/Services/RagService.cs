@@ -136,7 +136,10 @@ Remember: Only use the information from the provided documents. Do not add exter
 
             _logger.LogInformation("Sending chat request to Ollama for answer generation");
 
-            var response = await _httpClient.PostAsync($"{_ollamaBaseUrl}/api/chat", content);
+            var envValue = Environment.GetEnvironmentVariable("OLLAMA_API_URL");
+            var ollamaUrl = !string.IsNullOrEmpty(envValue) ? envValue : _ollamaBaseUrl;
+
+            var response = await _httpClient.PostAsync($"{ollamaUrl}/api/chat", content);
 
             if (!response.IsSuccessStatusCode)
             {
