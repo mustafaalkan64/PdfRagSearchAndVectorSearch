@@ -1,4 +1,4 @@
-# PDF Semantic Search Demo
+# PDF Vector Search and Rag Search Demo
 
 [🇹🇷 Türkçe](#türkçe) | [🇺🇸 English](#english)
 
@@ -50,7 +50,7 @@ PDF Semantic Search Demo is a full-stack application that enables AI-powered sem
 
 #### Prerequisites
 - Docker and Docker Compose
-- Node.js 18+ (for frontend development)
+- React JS (for frontend development)
 - .NET 9 SDK (for backend development)
 
 #### Using Docker Compose (Recommended)
@@ -76,6 +76,7 @@ PDF Semantic Search Demo is a full-stack application that enables AI-powered sem
    - Backend API: http://localhost:5000
    - Qdrant Dashboard: http://localhost:6333/dashboard
    - Ollama API: http://localhost:11434
+   - React APP: http://localhost:3000
 
 #### Manual Setup
 
@@ -146,7 +147,7 @@ GENERATION_MODEL=llama3.2
 #### Frontend Configuration
 ```typescript
 // src/services/api.ts
-const API_BASE_URL = 'https://localhost:7079/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 ```
 
 ### 🧪 Development
@@ -253,7 +254,7 @@ PDF Semantic Search Demo, PDF belgeler üzerinde AI destekli semantik arama ve R
 
 #### Ön Koşullar
 - Docker ve Docker Compose
-- Node.js 18+ (ön yüz geliştirme için)
+- React JS (ön yüz geliştirme için)
 - .NET 9 SDK (arka uç geliştirme için)
 
 #### Docker Compose Kullanarak (Önerilen)
@@ -279,6 +280,7 @@ PDF Semantic Search Demo, PDF belgeler üzerinde AI destekli semantik arama ve R
    - Arka Uç API: http://localhost:5000
    - Qdrant Dashboard: http://localhost:6333/dashboard
    - Ollama API: http://localhost:11434
+   - React App: http://localhost:3000
 
 #### Manuel Kurulum
 
@@ -349,7 +351,7 @@ GENERATION_MODEL=llama3.2
 #### Ön Yüz Yapılandırması
 ```typescript
 // src/services/api.ts
-const API_BASE_URL = 'https://localhost:7079/api';
+const API_BASE_URL = 'http://localhost:5000/api';
 ```
 
 ### 🧪 Geliştirme
