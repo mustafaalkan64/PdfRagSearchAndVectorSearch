@@ -21,6 +21,13 @@ PDF Semantic Search Demo is a full-stack application that enables AI-powered sem
 - **🐳 Docker Support**: Complete containerized deployment with Docker Compose
 - **🌐 Modern UI**: React TypeScript frontend with responsive design
 
+## 📸 Demo
+
+Here’s a preview of the AI-powered PDF semantic search interface:
+
+![Demo](https://github.com/mustafaalkan64/PdfRagSearchAndVectorSearch/blob/master/PdfSemanticSearchDemo/docs/images/ss-1.png)
+![Demo](https://github.com/mustafaalkan64/PdfRagSearchAndVectorSearch/blob/master/PdfSemanticSearchDemo/docs/images/ss-2.png)
+
 ### 🏗️ Architecture
 
 #### Backend (.NET 9)
