@@ -1,6 +1,6 @@
 using PdfSemanticSearchDemo.Models;
 
-namespace PdfSemanticSearchDemo.Services;
+namespace PdfSemanticSearchDemo.Abstracts;
 
 public interface IPdfService
 {

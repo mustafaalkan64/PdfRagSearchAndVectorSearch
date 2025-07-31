@@ -1,4 +1,5 @@
 using Qdrant.Client;
+using PdfSemanticSearchDemo.Abstracts;
 using PdfSemanticSearchDemo.Services;
 
 var builder = WebApplication.CreateBuilder(args);

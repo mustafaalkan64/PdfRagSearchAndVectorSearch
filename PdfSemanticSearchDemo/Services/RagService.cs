@@ -1,3 +1,4 @@
+using PdfSemanticSearchDemo.Abstracts;
 using PdfSemanticSearchDemo.Models;
 using System.Diagnostics;
 using System.Text;

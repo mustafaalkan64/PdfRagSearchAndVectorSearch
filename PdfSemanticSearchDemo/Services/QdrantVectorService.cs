@@ -4,6 +4,7 @@ using PdfSemanticSearchDemo.Models;
 using PdfSemanticSearchDemo.Utilities;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using PdfSemanticSearchDemo.Abstracts;
 
 namespace PdfSemanticSearchDemo.Services;
 

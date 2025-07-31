@@ -1,4 +1,4 @@
-namespace PdfSemanticSearchDemo.Services;
+namespace PdfSemanticSearchDemo.Abstracts;
 
 public interface IOllamaService
 {

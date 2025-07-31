@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using PdfSemanticSearchDemo.Abstracts;
 using PdfSemanticSearchDemo.Models;
-using PdfSemanticSearchDemo.Services;
 
 namespace PdfSemanticSearchDemo.Controllers;
 

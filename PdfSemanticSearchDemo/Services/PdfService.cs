@@ -1,6 +1,7 @@
 using iText.Kernel.Pdf;
 using iText.Kernel.Pdf.Canvas.Parser;
 using iText.Kernel.Pdf.Canvas.Parser.Listener;
+using PdfSemanticSearchDemo.Abstracts;
 using PdfSemanticSearchDemo.Models;
 
 namespace PdfSemanticSearchDemo.Services;
