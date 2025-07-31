@@ -29,15 +29,6 @@ public class QdrantVectorService : IVectorService
             var collections = await _qdrantClient.ListCollectionsAsync();
             var collectionExists = collections.Any(c => c == _collectionName);
 
-            if(collectionExists)
-            {
-                await _qdrantClient.DeleteCollectionAsync(_collectionName);
-                _logger.LogInformation("Collection already exists, deleting it to recreate with new configuration: {CollectionName}", _collectionName);
-            }
-
-            collections = await _qdrantClient.ListCollectionsAsync();
-            collectionExists = collections.Any(c => c == _collectionName);
-
             if (!collectionExists)
             {
                 _logger.LogInformation("Creating collection: {CollectionName}", _collectionName);

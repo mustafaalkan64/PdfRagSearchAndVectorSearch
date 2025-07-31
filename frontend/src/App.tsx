@@ -10,6 +10,8 @@ const App: React.FC = () => {
   const [uploadMessage, setUploadMessage] = useState('');
   const [error, setError] = useState('');
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [searchMode, setSearchMode] = useState<'vector' | 'rag'>('vector');
+  const [ragResponse, setRagResponse] = useState<RagSearchResponse | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -77,22 +79,41 @@ const App: React.FC = () => {
     setIsSearching(true);
     setError('');
     setSearchResults([]);
+    setRagResponse(null);
 
     try {
-      const searchRequest: SearchRequest = {
-        query: searchQuery.trim(),
-        limit: 10,
-        threshold: 0.3
-      };
+      if (searchMode === 'vector') {
+        const searchRequest: SearchRequest = {
+          query: searchQuery.trim(),
+          limit: 10,
+          threshold: 0.3
+        };
 
-      const results = await documentApi.search(searchRequest);
-      setSearchResults(results);
-      
-      if (results.length === 0) {
-        setError('No results found for your query');
+        const results = await documentApi.search(searchRequest);
+        setSearchResults(results);
+        
+        if (results.length === 0) {
+          setError('No results found for your query');
+        }
+      } else {
+        const ragRequest: RagSearchRequest = {
+          query: searchQuery.trim(),
+          maxResults: 5,
+          threshold: 0.3,
+          includeSourceDocuments: true
+        };
+
+        const response = await ragApi.searchWithRag(ragRequest);
+        
+        if (response.success) {
+          setRagResponse(response);
+          setSearchResults(response.sourceDocuments || []);
+        } else {
+          setError(response.errorMessage || 'RAG search failed');
+        }
       }
     } catch (err: any) {
-      setError(err.response?.data || 'Failed to search documents');
+      setError(err.response?.data?.message || err.response?.data || `Failed to ${searchMode} search documents`);
     } finally {
       setIsSearching(false);
     }
@@ -102,6 +123,12 @@ const App: React.FC = () => {
     setSearchResults([]);
     setSearchQuery('');
     setError('');
+    setRagResponse(null);
+  };
+
+  const handleModeChange = (mode: 'vector' | 'rag') => {
+    setSearchMode(mode);
+    clearResults();
   };
 
   return (
@@ -157,13 +184,42 @@ const App: React.FC = () => {
 
       {/* Search Section */}
       <div className="search-section">
-        <h2>Semantic Search</h2>
+        <h2>Search Documents</h2>
+        
+        {/* Search Mode Toggle */}
+        <div className="search-mode-toggle">
+          <button 
+            type="button"
+            className={`mode-button ${searchMode === 'vector' ? 'active' : ''}`}
+            onClick={() => handleModeChange('vector')}
+            disabled={isSearching}
+          >
+            📊 Vector Search
+          </button>
+          <button 
+            type="button"
+            className={`mode-button ${searchMode === 'rag' ? 'active' : ''}`}
+            onClick={() => handleModeChange('rag')}
+            disabled={isSearching}
+          >
+            🤖 RAG Search
+          </button>
+        </div>
+        
+        <div className="search-mode-description">
+          {searchMode === 'vector' ? (
+            <p>🔍 Find semantically similar content in your documents</p>
+          ) : (
+            <p>🤖 Get AI-generated answers based on your document content</p>
+          )}
+        </div>
+        
         <form onSubmit={handleSearch} className="search-form">
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Enter your search query (e.g., 'machine learning algorithms')"
+            placeholder={searchMode === 'vector' ? "Enter your search query..." : "Ask a question about your documents..."}
             className="search-input"
             disabled={isSearching}
           />
@@ -172,9 +228,9 @@ const App: React.FC = () => {
             className="search-button"
             disabled={isSearching || !searchQuery.trim()}
           >
-            {isSearching ? 'Searching...' : '🔍 Search'}
+            {isSearching ? 'Searching...' : searchMode === 'vector' ? '🔍 Search' : '🤖 Ask AI'}
           </button>
-          {searchResults.length > 0 && (
+          {(searchResults.length > 0 || ragResponse) && (
             <button 
               type="button" 
               className="clear-button"
@@ -192,18 +248,39 @@ const App: React.FC = () => {
         )}
       </div>
 
+      {/* RAG Answer Section */}
+      {ragResponse && ragResponse.generatedAnswer && (
+        <div className="rag-answer-section">
+          <h2>🤖 AI Generated Answer</h2>
+          <div className="rag-answer">
+            <div className="answer-content">
+              {ragResponse.generatedAnswer}
+            </div>
+            <div className="answer-metadata">
+              <span className="tokens-used">Tokens: {ragResponse.tokensUsed}</span>
+              <span className="response-time">Time: {ragResponse.responseTimeMs}ms</span>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Results Section */}
-      {(searchResults.length > 0 || isSearching) && (
+      {(searchResults.length > 0 || ragResponse || isSearching) && (
         <div className="results-section">
-          <h2>Search Results</h2>
+          <h2>{searchMode === 'rag' ? '📚 Source Documents' : '🔍 Search Results'}</h2>
           
           {isSearching ? (
             <div className="loading">
-              <p>🔄 Searching documents...</p>
+              <p>🔄 {searchMode === 'rag' ? 'Generating AI answer...' : 'Searching documents...'}</p>
             </div>
           ) : searchResults.length > 0 ? (
             <>
-              <p className="results-count">Found {searchResults.length} relevant results</p>
+              <p className="results-count">
+                {searchMode === 'rag' 
+                  ? `Based on ${searchResults.length} source document${searchResults.length > 1 ? 's' : ''}` 
+                  : `Found ${searchResults.length} relevant result${searchResults.length > 1 ? 's' : ''}`
+                }
+              </p>
               {searchResults.map((result, index) => (
                 <div key={result.id} className="result-item">
                   <div className="result-header">
